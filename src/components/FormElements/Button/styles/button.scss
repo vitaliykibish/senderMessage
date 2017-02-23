@@ -1,0 +1,23 @@
+.button {
+  padding: 10px 40px;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  border: none;
+  border-radius: 50px;
+  background-color: #00dab2;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 10px, rgba(0, 0, 0, 0.2) 0px 3px 10px;
+  transition: background-color .4s, box-shadow .4s;
+
+  &:hover {
+    background-color: darken(#00dab2, 4%);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px, rgba(0, 0, 0, 0.2) 0px 6px 10px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: #4e5c6f;
+  }
+}

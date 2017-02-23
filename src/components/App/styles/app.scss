@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
+@import 'reset.scss';
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-image: linear-gradient(to right bottom, #394c63, #253244);
+  background-repeat: no-repeat;
+}
+
+.app {
+  &-container {
+    width: 400px;
+    margin: 10% auto 0;
+    padding: 10px 30px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 10px, rgba(0, 0, 0, 0.2) 0px 3px 10px;
+  }
+
+  &-title {
+    font-size: 24px;
+    padding-bottom: 15px;
+  }
+}

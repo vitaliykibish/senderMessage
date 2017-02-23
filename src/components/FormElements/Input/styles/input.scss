@@ -1,0 +1,22 @@
+.input {
+  display: block;
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  border: none;
+  border: 1px solid #4e5c6f;
+  font-size: 14px;
+  font-weight: 300;
+  color: #fff;
+  transition: border .4s;
+  background: transparent;
+
+  &:focus {
+    outline: none;
+    border: 1px solid #00dab2;
+  }
+
+  &.error {
+    border: 1px solid red;
+  }
+}

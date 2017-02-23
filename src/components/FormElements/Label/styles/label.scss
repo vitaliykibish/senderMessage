@@ -1,0 +1,12 @@
+.label {
+  display: block;
+  text-align: left;
+  padding-bottom: 10px;
+  font-weight: 300;
+  color: #fff;
+
+  &-container {
+    position: relative;
+    margin: 20px 0;
+  }
+}
