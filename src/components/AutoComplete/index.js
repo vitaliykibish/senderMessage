@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import Immutable from 'immutable';
+
 // components
 import Item from './Item';
 
@@ -13,6 +15,9 @@ import './styles/auto-complete.scss';
 class AutoComplete extends Component {
   static propTypes = {
     max: PropTypes.number,
+    onClick: PropTypes.func,
+    searchUsers: PropTypes.func,
+    algoliaSearchReset: PropTypes.func,
   }
 
   static defaultProps = {
@@ -20,50 +25,53 @@ class AutoComplete extends Component {
   }
 
   state = {
-    email: '',
+    input: '',
   }
 
-  handleClick = (email) => {
+  handleClick = (input) => {
     const { onClick, algoliaSearchReset } = this.props;
 
-    this.setState({email}, onClick(email));
-    algoliaSearchReset();
+    this.setState({ input }, () => onClick(input));
   }
 
   handleClickOut = (e) => {
     const { users, algoliaSearchReset } = this.props;
-    const isUsers = !!users.size;
 
-    if (isUsers && !this.container.contains(e.target)) {
+    if (users.size && !this.container.contains(e.target)) {
       algoliaSearchReset();
     }
   }
 
   handleSearch = (input) => {
-    const { searchUsers, algoliaSearchReset } = this.props;
-
-    if (!input) {
-      return algoliaSearchReset();
-    }
+    const { searchUsers } = this.props;
 
     searchUsers(input);
   }
 
   componentDidMount() {
+    const { input } = this.props;
+
+    this.handleSearch(input);
     window.document.body.addEventListener('click', this.handleClickOut);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { algoliaSearchReset } = this.props;
-    const { input } = nextProps;
+    const { input, users, algoliaSearchReset } = this.props;
+    const stateInput = this.state.input;
 
+    const nextInput = nextProps.input;
+    const nextUsers = nextProps.users;
 
-    if (input === this.state.email) {
+    if (!Immutable.is(users, nextUsers)) {
+      return;
+    }
+
+    if (nextInput === stateInput) {
       return algoliaSearchReset();
     }
 
-    if (input !== this.props.input) {
-      this.handleSearch(input);
+    if (nextInput !== input) {
+      this.handleSearch(nextInput);
     }
   }
 
@@ -72,10 +80,10 @@ class AutoComplete extends Component {
   }
 
   render() {
-    const { max, users, input } = this.props;
-    const limitedUsers = users.slice(0, max);
+    const { max, users } = this.props;
+    const showUsers = users.slice(0, max);
 
-    const items = limitedUsers.map((user, i) => {
+    const items = showUsers.map((user, i) => {
       return <Item
         key={user.get('objectID')}
         user={user}

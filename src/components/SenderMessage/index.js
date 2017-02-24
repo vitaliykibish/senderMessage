@@ -12,7 +12,6 @@ import AutoComplete from 'components/AutoComplete';
 
 // actions
 import {
-  searchUsers,
   messageFetch,
   messageSendMore,
 } from 'store/senderMessage/actions';
@@ -124,7 +123,7 @@ class SenderMessage extends Component {
               error={!!emailError}
               onFocus={this.resetError}
               onChange={this.handleChange} />
-            <AutoComplete input={email} onClick={this.handleClick} />
+            { email ? <AutoComplete input={email} onClick={this.handleClick} /> : null}
             { emailError ? <Error msg={emailError} /> : null }
           </div>
           <div className="label-container">
